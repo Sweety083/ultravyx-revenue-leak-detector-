@@ -1,12 +1,26 @@
 <div class="page-header"><div><div class="eyebrow">Action center</div><h1>Process gaps</h1><p>Five patterns that may leave leads waiting or appointments lost.</p></div><a mat-stroked-button class="button-secondary" routerLink="/dashboard">← Dashboard</a></div>
-@if (loading) { <div class="gap-grid"><div class="skeleton card-skeleton"></div><div class="skeleton card-skeleton"></div><div class="skeleton card-skeleton"></div><div class="skeleton card-skeleton"></div><div class="skeleton card-skeleton"></div></div> }
+@if (loading) { <div class="skeleton pipeline-skeleton"></div> }
 @else if (error) { <div class="state-box"><span class="state-symbol">!</span><h2>Could not load process gaps</h2><p>{{error}}</p><button mat-flat-button class="button-primary" (click)="load()">Retry</button></div> }
 @else {
-  <div class="gap-grid">
-    @for (type of types; track type) {
-      <button type="button" class="gap-card panel" [class.selected]="selected === type" (click)="select(type)"><div class="gap-card-top"><span class="gap-glyph">◇</span><span class="pill" [class.high]="type === 'UNCONTACTED' || type === 'QUALIFIED_NOT_PROGRESSED' || type === 'NO_SHOW'">{{type === 'UNCONTACTED' || type === 'QUALIFIED_NOT_PROGRESSED' || type === 'NO_SHOW' ? 'HIGH' : 'MEDIUM'}}</span></div><strong>{{count(type)}}</strong><h2>{{labels[type]}}</h2><p>{{help[type]}}</p><span class="card-link">View affected leads →</span></button>
-    }
-  </div>
+  <section class="pipeline-panel panel" aria-labelledby="pipeline-title">
+    <div class="pipeline-heading">
+      <div><span class="eyebrow">Leakage map</span><h2 id="pipeline-title">Lead pipeline</h2></div>
+      <p>Select a leak point to inspect the affected leads.</p>
+    </div>
+    <div class="pipeline-scroll">
+      <div class="pipeline-flow" role="group" aria-label="Process gap pipeline">
+        @for (type of types; track type) {
+          <button type="button" class="pipeline-stage" [class.selected]="selected === type" (click)="select(type)" [attr.aria-pressed]="selected === type">
+            <span class="severity" [class.high]="type === 'UNCONTACTED' || type === 'QUALIFIED_NOT_PROGRESSED' || type === 'NO_SHOW'">{{type === 'UNCONTACTED' || type === 'QUALIFIED_NOT_PROGRESSED' || type === 'NO_SHOW' ? 'HIGH' : 'MEDIUM'}}</span>
+            <span class="pipe-run"><span class="pipe-value"><strong>{{count(type)}}</strong><small>affected</small></span></span>
+            <span class="leak-stream" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+            <span class="leak-pool" aria-hidden="true"></span>
+            <span class="stage-copy"><strong>{{labels[type]}}</strong><small>{{help[type]}}</small><span>View affected leads →</span></span>
+          </button>
+        }
+      </div>
+    </div>
+  </section>
   <div class="definition-note"><strong>How the 7-day rule works:</strong> it uses lead creation time. Without status history, we cannot know exactly when a lead first became qualified.</div>
   <section class="panel list-panel"><div class="list-header"><div><span class="eyebrow">Drill-down</span><h2>{{labels[selected]}} leads</h2><p>{{help[selected]}} · {{count(selected)}} affected leads</p></div><div class="list-actions"><a mat-stroked-button class="button-secondary" routerLink="/leads" [queryParams]="{leakType:selected}">Open in all leads</a><button mat-flat-button class="button-primary" [disabled]="exporting || count(selected) === 0" (click)="export()">{{exporting ? 'Exporting…' : 'Export affected CSV'}}</button></div></div>
     @if (tableLoading) { <div class="skeleton table-skeleton"></div> }
