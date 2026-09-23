@@ -34,13 +34,12 @@ class PostgresIntegrationIT {
         return new MockMultipartFile("file", "test.csv", "text/csv", content.getBytes(StandardCharsets.UTF_8));
     }
     @Test void flywayPersistenceImportFilteringConstraintsAndExportWorkAgainstPostgres() throws Exception {
-        try (EmbeddedPostgres postgres = EmbeddedPostgres.builder().start();
+        try (EmbeddedPostgres postgres = EmbeddedPostgres.builder().setLocaleConfig("locale", "C").start();
              ConfigurableApplicationContext context = new SpringApplicationBuilder(UltravyxApplication.class)
                      .web(WebApplicationType.NONE)
-                     .properties("spring.datasource.url=" + postgres.getJdbcUrl("postgres", "postgres"),
-                             "spring.datasource.username=postgres", "spring.datasource.password=",
-                             "spring.jpa.hibernate.ddl-auto=validate")
-                     .run()) {
+                     .run("--spring.datasource.url=" + postgres.getJdbcUrl("postgres", "postgres"),
+                             "--spring.datasource.username=postgres", "--spring.datasource.password=",
+                             "--spring.jpa.hibernate.ddl-auto=validate")) {
             JdbcTemplate jdbc = context.getBean(JdbcTemplate.class);
             assertEquals(1L, jdbc.queryForObject("SELECT count(*) FROM flyway_schema_history", Long.class));
             assertEquals(1L, jdbc.queryForObject("SELECT count(*) FROM organizations", Long.class));
