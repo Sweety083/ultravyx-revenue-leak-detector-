@@ -1,0 +1,42 @@
+.kpi-grid { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 14px; margin-bottom: 18px; }
+.kpi { padding: 20px 19px; min-height: 126px; display: flex; flex-direction: column; }
+.kpi span { color: #7989a1; font-size: 12px; font-weight: 700; }
+.kpi strong { font-size: clamp(24px,2.5vw,31px); color: #26324b; margin: 11px 0 2px; letter-spacing: -.9px; }
+.kpi small { color: #a0acc0; font-size: 11px; }
+.kpi-accent { border-color: #dcd8ff; background: #f8f7ff; }
+.kpi-accent strong { color: #6053d3; }
+.kpi-skeleton { min-height: 126px; }
+.content-skeleton { height: 350px; }
+.dashboard-grid { display: grid; grid-template-columns: minmax(0,1.15fr) minmax(0,.85fr); gap: 18px; }
+.dashboard-grid > * { min-width: 0; }
+.funnel-panel,.gap-panel { min-height: 335px; }
+.funnel-row { display: grid; grid-template-columns: 93px minmax(0,1fr) 35px 48px; gap: 11px; align-items: center; margin: 17px 0; font-size: 12px; }
+.funnel-name { color: #586982; font-weight: 700; }
+.funnel-row b { color: #303d55; text-align: right; }
+.funnel-row small { color: #94a0b3; text-align: right; }
+.funnel-track { height: 15px; border-radius: 99px; background: #eef1f9; overflow: hidden; }
+.funnel-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg,#685be9,#8c82ed); }
+.funnel-row:nth-of-type(2) .funnel-fill { background: #6c65e3; }
+.funnel-row:nth-of-type(3) .funnel-fill { background: #747ce1; }
+.funnel-row:nth-of-type(4) .funnel-fill { background: #6d9bdf; }
+.funnel-row:nth-of-type(5) .funnel-fill { background: #67b8d6; }
+.funnel-row:nth-of-type(6) .funnel-fill { background: #50bcab; }
+.footnote { color: #9aa6b8; font-size: 11px; line-height: 1.5; margin: 17px 0 0; }
+.gap-list { display: grid; gap: 5px; }
+.gap-link { display: flex; align-items: center; gap: 10px; padding: 9px 8px; border-radius: 9px; text-decoration: none; color: inherit; }
+.gap-link:hover { background: #f6f7fd; }
+.gap-icon { display: grid; place-items: center; flex: none; width: 29px; height: 29px; border-radius: 8px; background: #fff6e7; color: #b98434; font-size: 20px; }
+.gap-icon.high { background: #fff0eb; color: #db7454; }
+.gap-text { min-width: 0; display: grid; gap: 2px; flex: 1; }
+.gap-text strong { color: #344057; font-size: 12px; }
+.gap-text small { color: #9ba5b5; font-size: 10px; }
+.gap-link b { font-size: 13px; }
+.arrow { color: #a7b0c0; }
+.source-panel,.response-panel { min-height: 245px; }
+.bucket-row { display: grid; grid-template-columns: 110px 1fr 26px; gap: 12px; align-items: center; margin: 16px 0; color: #65738c; font-size: 12px; }
+.bucket-row b { color: #384761; text-align: right; }
+.bucket-track { background: #f1f3fa; border-radius: 99px; height: 10px; overflow: hidden; }
+.bucket-track div { height: 100%; border-radius: inherit; background: #74a4e4; }
+@media (max-width: 1150px) { .kpi-grid { grid-template-columns: repeat(3,minmax(0,1fr)); } }
+@media (max-width: 800px) { .dashboard-grid { grid-template-columns: minmax(0,1fr); } }
+@media (max-width: 650px) { .kpi-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 9px; } .kpi { padding: 16px; min-height: 108px; } .kpi strong { font-size: 24px; } .funnel-row { grid-template-columns: 73px minmax(0,1fr) 30px; gap: 8px; } .funnel-row small { display: none; } .bucket-row { grid-template-columns: 75px 1fr 25px; gap: 8px; } }

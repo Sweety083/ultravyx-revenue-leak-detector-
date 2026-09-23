@@ -1,0 +1,22 @@
+.gap-grid { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 13px; }
+.gap-card { display: flex; flex-direction: column; align-items: start; min-height: 208px; padding: 17px; text-align: left; color: inherit; transition: border-color .15s, transform .15s, box-shadow .15s; }
+.gap-card:hover { transform: translateY(-2px); border-color: #c9c4f5; }
+.gap-card.selected { border: 2px solid #6b5fe6; box-shadow: 0 5px 24px #6b5fe621; }
+.gap-card-top { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 11px; }
+.gap-glyph { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 9px; background: #f0edff; color: #7366d9; font-size: 22px; }
+.gap-card strong { font-size: 28px; color: #253148; letter-spacing: -.8px; }
+.gap-card h2 { font-size: 12px; margin: 5px 0 3px; }
+.gap-card p { color: #93a0b2; font-size: 10px; line-height: 1.4; margin-bottom: auto; }
+.card-link { color: #6559dc; font-size: 10px; font-weight: 800; margin-top: 12px; }
+.card-skeleton { height: 208px; }
+.definition-note { margin: 14px 0 21px; padding: 12px 15px; border-left: 3px solid #a0a9e7; color: #7886a0; background: #f0f2fa; border-radius: 5px; font-size: 11px; line-height: 1.5; }
+.definition-note strong { color: #515a83; }
+.list-panel { overflow: hidden; }
+.list-header { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 21px 22px; }
+.list-header h2 { font-size: 19px; margin: 4px 0 3px; }
+.list-header p { margin: 0; color: #93a0b4; font-size: 11px; }
+.list-actions { display: flex; gap: 9px; flex-wrap: wrap; }
+.table-skeleton { margin: 10px 20px 20px; height: 220px; }
+@media (max-width: 1150px) { .gap-grid { grid-template-columns: repeat(3,minmax(0,1fr)); } }
+@media (max-width: 800px) { .gap-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .list-header { align-items: start; flex-direction: column; } }
+@media (max-width: 480px) { .gap-grid { gap: 8px; } .gap-card { padding: 12px; min-height: 185px; } .gap-card strong { font-size: 24px; } .gap-card .pill { font-size: 9px; } }

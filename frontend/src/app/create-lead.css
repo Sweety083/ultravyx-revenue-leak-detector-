@@ -1,0 +1,13 @@
+.intro { color: #52617c; margin-bottom: 8px; font-size: 14px; }
+.time-note { color: #52617c; font-size: 12px; line-height: 1.5; margin-bottom: 22px; }
+.form-grid { border: 0; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 18px; }
+.field { min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.field label { color: #36445d; font-size: 12px; font-weight: 600; }
+.field input, .field select { width: 100%; min-width: 0; flex: none; height: 42px; }
+.field-error { color: #b13232; font-size: 12px; min-height: 16px; line-height: 1.4; }
+[aria-invalid="true"] { border-color: #b13232; }
+.form-error { background: #fff0eb; color: #9b3030; border-radius: 8px; padding: 12px; font-size: 13px; }
+.saving-status { color: #52617c; font-size: 12px; margin-right: auto; }
+mat-dialog-actions { padding: 16px 24px; }
+@media (max-width: 540px) { .form-grid { grid-template-columns: 1fr; } }
+:host, :host mat-dialog-content, [mat-dialog-title], button { font-family: Inter, 'Segoe UI', Arial, sans-serif; }

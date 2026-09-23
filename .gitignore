@@ -1,0 +1,13 @@
+node_modules/
+target/
+.angular/
+dist/
+coverage/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+.local-runtime/
+.idea/
+*.iml

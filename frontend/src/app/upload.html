@@ -1,0 +1,26 @@
+<div class="page-header"><div><div class="eyebrow">Data setup</div><h1>Upload your leads</h1><p>Start with the included fictional sample, or use your own CSV export.</p></div></div>
+<div class="upload-layout">
+  <section class="panel panel-pad upload-card">
+    <div class="section-heading"><h2>Import CSV</h2><span class="pill">Step 1 of 2</span></div>
+    <div class="dropzone" [class.drag-over]="dragOver" (dragover)="$event.preventDefault(); dragOver = true" (dragleave)="dragOver = false" (drop)="dropped($event)">
+      <div class="upload-symbol">⇧</div><h3>Drop a CSV file here</h3><p>or choose a file from your computer</p>
+      <label class="file-button" for="leads-file">Choose CSV file</label><input id="leads-file" type="file" accept=".csv,text/csv" [disabled]="importing" (change)="choose($event)" />
+      <small>CSV files only · Up to 10 MB · First row must contain column names</small>
+    </div>
+    @if (file) { <div class="selected-file"><span>▦</span><div><strong>{{file.name}}</strong><small>{{file.size / 1024 | number:'1.0-1'}} KB ready to import</small></div><button type="button" aria-label="Remove selected file" [disabled]="importing" (click)="file = undefined">×</button></div> }
+    @if (importing) { <div class="progress"><div [style.width.%]="progress"></div></div><p class="muted tiny">Uploading… {{progress}}%</p> }
+    @if (error) { <div class="inline-error" role="alert">{{error}}</div> }
+    <div class="upload-actions"><button mat-flat-button class="button-primary" [disabled]="!file || importing" (click)="upload()">{{importing ? 'Importing…' : 'Import leads'}}</button><a mat-stroked-button class="button-secondary" href="/sample-leads.csv" download="sample-leads.csv">Download sample CSV</a></div>
+  </section>
+  <aside class="details-column">
+    <section class="panel panel-pad"><div class="section-heading"><h2>File requirements</h2></div><ul class="requirements"><li>One lead per row, with a header row.</li><li>Required values: <code>lead_id</code>, <code>name</code>, <code>status</code>, <code>created_at</code>.</li><li>All 11 columns must exist, but other cells can be blank.</li><li>Dates use ISO-8601 with an offset, such as <code>2026-09-20T09:30:00Z</code>.</li><li>Repeated lead IDs update existing records on re-import.</li></ul></section>
+    <section class="tip-card"><span>✦</span><div><strong>Presentation tip</strong><p>Download the sample first, then import it to populate every dashboard and process-gap view with 500 fictional leads.</p></div></section>
+  </aside>
+</div>
+@if (result) {
+  <section class="panel panel-pad results"><div class="section-heading"><h2>Import results</h2><span class="pill" [class.success]="result.failed === 0">{{result.failed ? 'Review row errors' : 'Import complete'}}</span></div>
+    <div class="result-grid"><div><strong>{{result.total}}</strong><span>Rows read</span></div><div><strong>{{result.inserted}}</strong><span>Inserted</span></div><div><strong>{{result.updated}}</strong><span>Updated</span></div><div><strong>{{result.failed}}</strong><span>Failed</span></div></div>
+    @if (result.errors.length) { <div class="table-wrap"><table><thead><tr><th>Row</th><th>Field</th><th>Issue</th></tr></thead><tbody>@for (rowError of result.errors; track $index) { <tr><td>{{rowError.row}}</td><td>{{rowError.field}}</td><td>{{rowError.message}}</td></tr> }</tbody></table></div> }
+    <div class="result-actions"><a mat-flat-button class="button-primary" routerLink="/dashboard">View dashboard →</a><a mat-stroked-button class="button-secondary" routerLink="/leads">View all leads</a></div>
+  </section>
+}

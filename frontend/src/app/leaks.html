@@ -1,0 +1,19 @@
+<div class="page-header"><div><div class="eyebrow">Action center</div><h1>Process gaps</h1><p>Five patterns that may leave leads waiting or appointments lost.</p></div><a mat-stroked-button class="button-secondary" routerLink="/dashboard">← Dashboard</a></div>
+@if (loading) { <div class="gap-grid"><div class="skeleton card-skeleton"></div><div class="skeleton card-skeleton"></div><div class="skeleton card-skeleton"></div><div class="skeleton card-skeleton"></div><div class="skeleton card-skeleton"></div></div> }
+@else if (error) { <div class="state-box"><span class="state-symbol">!</span><h2>Could not load process gaps</h2><p>{{error}}</p><button mat-flat-button class="button-primary" (click)="load()">Retry</button></div> }
+@else {
+  <div class="gap-grid">
+    @for (type of types; track type) {
+      <button type="button" class="gap-card panel" [class.selected]="selected === type" (click)="select(type)"><div class="gap-card-top"><span class="gap-glyph">◇</span><span class="pill" [class.high]="type === 'UNCONTACTED' || type === 'QUALIFIED_NOT_PROGRESSED' || type === 'NO_SHOW'">{{type === 'UNCONTACTED' || type === 'QUALIFIED_NOT_PROGRESSED' || type === 'NO_SHOW' ? 'HIGH' : 'MEDIUM'}}</span></div><strong>{{count(type)}}</strong><h2>{{labels[type]}}</h2><p>{{help[type]}}</p><span class="card-link">View affected leads →</span></button>
+    }
+  </div>
+  <div class="definition-note"><strong>How the 7-day rule works:</strong> it uses lead creation time. Without status history, we cannot know exactly when a lead first became qualified.</div>
+  <section class="panel list-panel"><div class="list-header"><div><span class="eyebrow">Drill-down</span><h2>{{labels[selected]}} leads</h2><p>{{help[selected]}} · {{count(selected)}} affected leads</p></div><div class="list-actions"><a mat-stroked-button class="button-secondary" routerLink="/leads" [queryParams]="{leakType:selected}">Open in all leads</a><button mat-flat-button class="button-primary" [disabled]="exporting || count(selected) === 0" (click)="export()">{{exporting ? 'Exporting…' : 'Export affected CSV'}}</button></div></div>
+    @if (tableLoading) { <div class="skeleton table-skeleton"></div> }
+    @else if (tableError) { <div class="state-box"><h2>Could not load affected leads</h2><p>{{tableError}}</p><button mat-flat-button class="button-primary" (click)="loadTable()">Retry</button></div> }
+    @else if (!leads?.items?.length) { <div class="state-box"><span class="state-symbol">✓</span><h2>No affected leads</h2><p>Nothing currently matches this gap.</p></div> }
+    @else { <div class="table-wrap"><table><thead><tr><th>Lead</th><th>Source</th><th>Created</th><th>Owner</th><th>Status</th><th>Detected problems</th></tr></thead><tbody>@for (lead of leads?.items || []; track lead.id) { <tr><td><strong>{{lead.name}}</strong><br><span class="muted tiny">{{lead.externalLeadId}}</span></td><td>{{lead.source || 'Unknown'}}</td><td>{{lead.createdAt | date:'mediumDate'}}</td><td>{{lead.assignedTo || 'Unassigned'}}</td><td><span class="pill">{{lead.status.replaceAll('_',' ')}}</span></td><td><div class="problem-list">@for (problem of lead.detectedProblems; track problem.type) { <span class="pill" [class.high]="problem.severity === 'HIGH'" [class.medium]="problem.severity === 'MEDIUM'">{{labels[problem.type]}}</span> }</div></td></tr> }</tbody></table></div>
+      <div class="pager"><span>{{leads?.totalElements}} affected leads</span><div class="pager-buttons"><button [disabled]="page === 0" (click)="changePage(page - 1)">Previous</button><span>Page {{page + 1}} of {{leads?.totalPages}}</span><button [disabled]="page + 1 >= (leads?.totalPages || 0)" (click)="changePage(page + 1)">Next</button></div></div>
+    }
+  </section>
+}

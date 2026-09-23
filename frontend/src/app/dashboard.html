@@ -1,0 +1,52 @@
+<div class="page-header">
+  <div><div class="eyebrow">Overview</div><h1>Revenue leak dashboard</h1><p>See where leads stall and follow the next action.</p></div>
+  <a mat-flat-button class="button-primary" routerLink="/upload">+ Upload leads</a>
+</div>
+
+@if (loading) {
+  <div class="kpi-grid" aria-label="Loading dashboard"><div class="skeleton kpi-skeleton"></div><div class="skeleton kpi-skeleton"></div><div class="skeleton kpi-skeleton"></div><div class="skeleton kpi-skeleton"></div><div class="skeleton kpi-skeleton"></div></div>
+  <div class="skeleton content-skeleton"></div>
+} @else if (error) {
+  <div class="state-box"><span class="state-symbol">!</span><h2>Dashboard could not load</h2><p>{{error}}</p><button mat-flat-button class="button-primary" (click)="load()">Retry</button></div>
+} @else if (summary && summary.totalLeads === 0) {
+  <div class="state-box"><span class="state-symbol">⇧</span><h2>No leads yet</h2><p>Upload the included sample CSV to see the dashboard come alive.</p><a mat-flat-button class="button-primary" routerLink="/upload">Upload sample CSV</a></div>
+} @else if (summary) {
+  <div class="kpi-grid">
+    <div class="panel kpi"><span>Total leads</span><strong>{{summary.totalLeads | number}}</strong><small>Records in workspace</small></div>
+    <div class="panel kpi"><span>Customers</span><strong>{{summary.customers | number}}</strong><small>Won leads</small></div>
+    <div class="panel kpi"><span>Recorded revenue</span><strong>{{summary.recordedRevenue | currency:currency:'symbol':'1.0-0'}}</strong><small>Only entered revenue values</small></div>
+    <div class="panel kpi kpi-accent"><span>Affected leads</span><strong>{{summary.affectedLeads | number}}</strong><small>Unique leads with a gap</small></div>
+    <div class="panel kpi"><span>Total flags</span><strong>{{summary.totalFlags | number}}</strong><small>A lead may have multiple</small></div>
+  </div>
+  <div class="dashboard-grid">
+    <section class="panel panel-pad funnel-panel">
+      <div class="section-heading"><h2>Cumulative lead funnel</h2><span class="muted tiny">Inferred from current status</span></div>
+      @for (stage of funnel?.stages || []; track stage.name) {
+        <div class="funnel-row"><div class="funnel-name">{{stage.name}}</div><div class="funnel-track"><div class="funnel-fill" [style.width.%]="funnelWidth(stage.count)"></div></div><b>{{stage.count}}</b><small>{{stage.conversionRate | number:'1.0-1'}}%</small></div>
+      }
+      <p class="footnote">“Lost” is not assigned to later stages because its last reached stage is unknown.</p>
+    </section>
+    <section class="panel panel-pad gap-panel">
+      <div class="section-heading"><h2>Process gaps</h2><a routerLink="/leaks" class="tiny">View all →</a></div>
+      <div class="gap-list">
+        @for (gap of summary.leakCounts; track gap.type) {
+          <a [routerLink]="['/leaks']" [queryParams]="{type: gap.type}" class="gap-link"><span class="gap-icon" [class.high]="gap.severity === 'HIGH'">◇</span><span class="gap-text"><strong>{{leakLabel(gap.type)}}</strong><small>{{leakHelp(gap.type)}}</small></span><b>{{gap.count}}</b><span class="arrow">→</span></a>
+        }
+      </div>
+      <p class="footnote">Qualified-not-progressed uses lead creation time; qualification-entry time is not available.</p>
+    </section>
+    <section class="panel panel-pad source-panel">
+      <div class="section-heading"><h2>Source performance</h2><span class="muted tiny">Recorded revenue only</span></div>
+      @if (sources.length) {
+        <div class="table-wrap"><table><thead><tr><th>Source</th><th>Leads</th><th>Customers</th><th>Conversion</th><th>Recorded revenue</th></tr></thead><tbody>
+          @for (source of sources; track source.source) { <tr><td><strong>{{source.source}}</strong></td><td>{{source.totalLeads}}</td><td>{{source.customers}}</td><td>{{source.conversionRate | number:'1.0-1'}}%</td><td>{{source.recordedRevenue | currency:currency:'symbol':'1.0-0'}}</td></tr> }
+        </tbody></table></div>
+      } @else { <p class="muted">No source data yet.</p> }
+    </section>
+    <section class="panel panel-pad response-panel">
+      <div class="section-heading"><h2>Response times</h2><span class="muted tiny">First contact</span></div>
+      @for (bucket of buckets; track bucket.bucket) { <div class="bucket-row"><span>{{bucket.bucket}}</span><div class="bucket-track"><div [style.width.%]="bucketWidth(bucket.count)"></div></div><b>{{bucket.count}}</b></div> }
+      <p class="footnote">Leads without a contact timestamp are shown separately when returned by the API.</p>
+    </section>
+  </div>
+}

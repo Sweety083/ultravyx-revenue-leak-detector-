@@ -1,0 +1,24 @@
+<div class="shell">
+  <aside class="sidebar">
+    <a class="brand" routerLink="/dashboard" aria-label="ULTRAVYX dashboard"><span class="brand-mark">U</span><span>ULTRAVYX<small>REVENUE INTELLIGENCE</small></span></a>
+    <div class="workspace-tag"><span class="workspace-dot"></span> Presentation workspace</div>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a routerLink="/dashboard" routerLinkActive="active"><span class="nav-icon">◫</span> Dashboard</a>
+      <a routerLink="/upload" routerLinkActive="active"><span class="nav-icon">⇧</span> Upload leads</a>
+      <a routerLink="/leaks" routerLinkActive="active"><span class="nav-icon">◇</span> Process gaps</a>
+      <a routerLink="/leads" routerLinkActive="active"><span class="nav-icon">☷</span> All leads</a>
+    </nav>
+    <div class="sidebar-footer"><span class="footer-icon">ⓘ</span><span>Presentation MVP<br><small>CSV-powered insights</small></span></div>
+  </aside>
+  <div class="app-main">
+    <header class="topbar"><div class="mobile-brand"><span class="brand-mark">U</span> ULTRAVYX</div><span class="topbar-label">Revenue Leak Detector</span><span class="topbar-pill">Demo workspace</span></header>
+    <main class="content"><router-outlet /></main>
+  </div>
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+    <a routerLink="/upload" routerLinkActive="active">Upload</a>
+    <a routerLink="/leaks" routerLinkActive="active">Gaps</a>
+    <a routerLink="/leads" routerLinkActive="active">Leads</a>
+  </nav>
+  @if (toast.message()) { <div class="toast" [class.error]="toast.kind() === 'error'" role="status"><span>{{toast.kind() === 'error' ? '!' : '✓'}}</span>{{toast.message()}}<button type="button" aria-label="Dismiss message" (click)="toast.dismiss()">×</button></div> }
+</div>

@@ -1,0 +1,24 @@
+.leads-panel { overflow: hidden; }
+.header-actions { display: flex; flex-wrap: wrap; gap: 10px; flex-shrink: 0; }
+.clear-filters { margin-top: 10px; }
+.filters { padding: 17px; }
+.search-wrap { position: relative; flex: 1.3; min-width: 190px; }
+.search-wrap span { position: absolute; top: 6px; left: 13px; color: #8a97a9; font-size: 22px; }
+.search-wrap input { width: 100%; padding-left: 37px; }
+.sort-control { margin-left: auto; }
+.table-skeleton { margin: 10px 17px 17px; height: 320px; }
+.lead-link { color: #5149bd; background: none; border: 0; padding: 0; font-size: 12px; font-weight: 800; text-align: left; }
+.lead-link:hover { text-decoration: underline; }
+.problem-list a { text-decoration: none; }
+.modal-backdrop { position: fixed; z-index: 80; inset: 0; display: flex; justify-content: flex-end; background: #14223b88; }
+.detail-modal { width: min(490px,100vw); height: 100%; overflow: auto; background: white; box-shadow: -16px 0 50px #14223b44; padding: 32px; position: relative; }
+.detail-modal h2 { font-size: 26px; margin: 7px 0 4px; }
+.detail-modal h3 { margin-top: 26px; font-size: 15px; }
+.modal-close { position: absolute; top: 20px; right: 23px; color: #8190a6; background: none; border: none; font-size: 27px; }
+.modal-skeleton { height: 450px; }
+.detail-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 17px; margin-top: 28px; }
+.detail-grid div { display: grid; gap: 5px; border-bottom: 1px solid #edf0f5; padding-bottom: 14px; }
+.detail-grid span { color: #96a3b6; font-size: 11px; }
+.detail-grid strong { color: #36445d; font-size: 13px; }
+@media (max-width: 900px) { .sort-control { margin-left: 0; } }
+@media (max-width: 650px) { .page-header { flex-wrap: wrap; } .detail-modal { padding: 25px 20px 80px; } .pager { align-items: start; flex-direction: column; } }

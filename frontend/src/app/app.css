@@ -1,0 +1,28 @@
+:host { display: block; min-height: 100vh; }
+.shell { display: flex; min-height: 100vh; }
+.sidebar { position: sticky; top: 0; display: flex; flex-direction: column; width: 244px; height: 100vh; flex: none; background: #111c32; color: #e9f2ff; padding: 25px 14px 18px; }
+.brand { display: flex; align-items: center; gap: 10px; padding: 0 10px; color: white; text-decoration: none; font-size: 18px; font-weight: 800; letter-spacing: 1.3px; }
+.brand small { display: block; margin-top: 1px; color: #7f99bd; font-size: 9px; letter-spacing: 1.5px; font-weight: 700; }
+.brand-mark { display: inline-grid; place-items: center; width: 37px; height: 37px; flex: none; border-radius: 11px; background: linear-gradient(135deg,#6f52fa,#31c4dd); color: white; font-weight: 900; font-size: 22px; }
+.workspace-tag { display: flex; align-items: center; gap: 8px; margin: 38px 9px 20px; color: #8da1c0; font-size: 11px; text-transform: uppercase; letter-spacing: .8px; font-weight: 700; }
+.workspace-dot { width: 7px; height: 7px; background: #31cca8; border-radius: 50%; }
+.main-nav { display: grid; gap: 5px; }
+.main-nav a { display: flex; align-items: center; gap: 11px; padding: 12px 14px; border-radius: 10px; color: #afc0d9; text-decoration: none; font-size: 14px; font-weight: 600; }
+.main-nav a:hover,.main-nav a.active { background: #263a5b; color: white; }
+.main-nav a.active { box-shadow: inset 3px 0 #6b68ff; }
+.nav-icon { width: 19px; text-align: center; color: #91a7d0; font-size: 19px; line-height: 1; }
+.sidebar-footer { display: flex; align-items: center; gap: 10px; margin-top: auto; padding: 13px 10px 0; border-top: 1px solid #2c3b55; color: #b2c0d6; font-size: 12px; line-height: 1.4; }
+.sidebar-footer small { color: #6f83a1; }
+.footer-icon { font-size: 20px; color: #8299bc; }
+.app-main { min-width: 0; flex: 1; }
+.topbar { height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid #e6ebf3; padding: 0 34px; background: white; }
+.topbar-label { font-size: 13px; color: #8c9bb0; font-weight: 600; }
+.topbar-pill { padding: 7px 12px; border: 1px solid #dce4f2; border-radius: 999px; color: #5a6b85; background: #f7f9fc; font-size: 11px; font-weight: 700; }
+.mobile-brand,.mobile-nav { display: none; }
+.content { max-width: 1640px; margin: 0 auto; padding: 31px 35px 70px; }
+.toast { position: fixed; z-index: 100; right: 20px; bottom: 20px; display: flex; align-items: center; gap: 10px; min-width: 230px; max-width: min(450px,calc(100vw - 30px)); padding: 13px 15px; border-radius: 10px; color: white; background: #1b8b71; box-shadow: 0 13px 35px #122c3c4d; font-size: 13px; font-weight: 700; }
+.toast.error { background: #b9504b; }
+.toast span { font-size: 19px; }
+.toast button { margin-left: auto; color: white; background: none; border: none; font-size: 20px; }
+@media (max-width: 900px) { .sidebar { width: 74px; padding-inline: 9px; } .brand { justify-content: center; padding: 0; } .brand span:nth-child(2),.workspace-tag,.sidebar-footer { display: none; } .main-nav a { justify-content: center; font-size: 0; padding: 14px 8px; } .nav-icon { font-size: 22px; } .content { padding: 26px 24px 80px; } }
+@media (max-width: 650px) { .sidebar { display: none; } .topbar { padding: 0 17px; height: 56px; } .topbar-label { display: none; } .mobile-brand { display: flex; align-items: center; gap: 7px; color: #17243f; font-size: 14px; font-weight: 900; letter-spacing: .5px; } .mobile-brand .brand-mark { width: 27px; height: 27px; font-size: 17px; border-radius: 7px; } .content { padding: 22px 15px 95px; } .mobile-nav { position: fixed; z-index: 50; bottom: 0; inset-inline: 0; display: grid; grid-template-columns: repeat(4,1fr); background: #15213a; padding: 9px 5px max(9px,env(safe-area-inset-bottom)); box-shadow: 0 -8px 24px #15213a25; } .mobile-nav a { text-align: center; padding: 10px 2px; color: #a3b6d2; text-decoration: none; font-size: 12px; font-weight: 700; border-radius: 8px; } .mobile-nav a.active { color: white; background: #334b72; } .toast { bottom: 70px; right: 15px; } }
